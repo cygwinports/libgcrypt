@@ -1,0 +1,81 @@
+libgcrypt
+------------------------------------------
+Libgcrypt is a general purpose crypto library based on the code
+used in GnuPG.
+
+Runtime requirements:
+  cygwin-1.5.24-2
+  libgpg-error0-1.5-1
+
+Build requirements:
+(besides corresponding -devel packages)
+  cygwin-1.5.24-2
+  autoconf2.5-2.61-1
+  automake1.9-1.9.6-2
+  binutils-20060817-1
+  cygport-0.2.11-1
+  gawk-3.1.5-4
+  gcc-core-3.4.4-3
+  libtool1.5-1.5.23a-2
+  make-3.81-1
+  sed-4.1.5-2
+
+Canonical website:
+  http://www.gnupg.org/related_software/libraries.html
+
+Canonical download:
+  ftp://ftp.gnupg.org/gcrypt/libgcrypt/
+
+-------------------------------------------
+
+Build instructions:
+  unpack libgcrypt-1.2.4-X-src.tar.bz2
+    if you use setup to install this src package, it will be
+	 unpacked under /usr/src automatically
+  cd /usr/src
+  cygport ./libgcrypt-1.2.4-X.cygport all
+
+This will create:
+  /usr/src/libgcrypt-1.2.4-X-src.tar.bz2
+  /usr/src/libgcrypt-1.2.4-X.tar.bz2
+
+-------------------------------------------
+
+Files included in the binary packages:
+
+(libgcrypt)
+  /etc/postinstall/libgcrypt.sh
+  /usr/share/doc/Cygwin/libgcrypt-1.2.4.README
+  /usr/share/doc/libgcrypt-1.2.4/AUTHORS
+  /usr/share/doc/libgcrypt-1.2.4/COPYING
+  /usr/share/doc/libgcrypt-1.2.4/COPYING.LIB
+  /usr/share/doc/libgcrypt-1.2.4/ChangeLog
+  /usr/share/doc/libgcrypt-1.2.4/INSTALL
+  /usr/share/doc/libgcrypt-1.2.4/NEWS
+  /usr/share/doc/libgcrypt-1.2.4/README
+  /usr/share/doc/libgcrypt-1.2.4/THANKS
+  /usr/share/doc/libgcrypt-1.2.4/TODO
+  /usr/share/info/gcrypt.info.gz
+
+(libgcrypt11)
+  /usr/bin/cyggcrypt-11.dll
+
+(libgcrypt-devel)
+  /usr/bin/libgcrypt-config
+  /usr/include/gcrypt-module.h
+  /usr/include/gcrypt.h
+  /usr/lib/libgcrypt.a
+  /usr/lib/libgcrypt.dll.a
+  /usr/lib/libgcrypt.la
+  /usr/share/aclocal/libgcrypt.m4
+
+------------------
+
+Port Notes:
+
+----- version 1.2.4-1 -----
+Unofficial version bump; last release in distro was 1.2.1-1.
+
+
+Cygwin port maintained by:
+http://cygwinports.dotsrc.org/
