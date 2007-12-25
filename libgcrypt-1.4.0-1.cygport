@@ -1,0 +1,23 @@
+DESCRIPTION="GnuPG general-purpose cryptography library"
+HOMEPAGE="http://www.gnupg.org/related_software/libraries.html"
+SRC_URI="ftp://ftp.gnupg.org/gcrypt/${PN}/${P}.tar.bz2
+		 ftp://ftp.gnupg.org/gcrypt/${PN}/${P}.tar.bz2.sig"
+
+PKG_NAMES="${PN} ${PN}11 ${PN}-devel"
+PKG_HINTS='setup runtime devel'
+PKG_CONTENTS[0]='--exclude=aclocal etc/ usr/bin/*.exe usr/share/'
+PKG_CONTENTS[1]='usr/bin/*.dll'
+PKG_CONTENTS[2]='usr/bin/*-config usr/include/ usr/lib/ usr/share/aclocal/'
+
+DIFF_EXCLUDES="libtool.m4"
+
+src_compile() {
+	cd ${S}
+	rm -f m4/libtool.m4
+	cygautoreconf
+
+	cd ${B}
+	# asm doesn't compile, and on Linux leads to segv (Gentoo bug 201917)
+	cygconf --disable-padlock-support
+	cygmake
+}
