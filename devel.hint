@@ -1,6 +1,0 @@
-category: Libs
-requires: libgcrypt11 libgpg-error-devel
-external-source: libgcrypt
-sdesc: "GnuPG cryptography library (development)"
-ldesc: "Libgcrypt is a general purpose crypto library based on the code 
-used in GnuPG."

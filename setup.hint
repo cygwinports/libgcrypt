@@ -1,5 +1,0 @@
-category: Libs
-requires: libgcrypt11
-sdesc: "GnuPG cryptography library (utility)"
-ldesc: "Libgcrypt is a general purpose crypto library based on the code 
-used in GnuPG."
