@@ -1,17 +1,34 @@
 NAME="libgcrypt"
-VERSION=1.5.0
+VERSION=1.5.3
 RELEASE=1
 CATEGORY="Libs"
 SUMMARY="GnuPG cryptography library"
 DESCRIPTION="Libgcrypt is a general purpose crypto library based on the code
 used in GnuPG."
 HOMEPAGE="http://www.gnupg.org/related_software/libraries.html"
-SRC_URI="ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-${VERSION}.tar.bz2
-	 ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-${VERSION}.tar.bz2.sig"
+#SRC_URI="ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-${VERSION}.tar.bz2"
+md5sum=99e0f2dc94dac6eceab709d03d613328
+SRC_URI="
+	http://pkgs.fedoraproject.org/repo/pkgs/libgcrypt/libgcrypt-${VERSION}-hobbled.tar.xz/${md5sum}/libgcrypt-${VERSION}-hobbled.tar.xz
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/ecc.c?h=f20
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/curves.c?h=f20
+"
 SRC_DIR="libgcrypt-${VERSION}"
-PATCH_URI="1.5.0-win64.patch"
+PATCH_URI="
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.5.0-leak.patch?h=f20
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.5.2-aliasing.patch?h=f20
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.5.2-mpicoder-gccopt.patch?h=f20
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.5.3-ecc-test-fix.patch?h=f20
+	1.5.0-win64.patch
+"
 
-PKG_NAMES="${PN} ${PN}11 ${PN}-devel"
+CYGPORT_USE_UNSTABLE_API=1
+src_unpack_hook() {
+	mv ecc.c cipher/
+	mv curves.c tests/
+}
+
+PKG_NAMES="${NAME} ${NAME}11 ${NAME}-devel"
 libgcrypt_CONTENTS='--exclude=aclocal usr/bin/*.exe usr/share/'
 libgcrypt11_CONTENTS='usr/bin/cyggcrypt-11.dll'
 libgcrypt_devel_REQUIRES="libgpg-error-devel"
