@@ -1,5 +1,5 @@
 NAME="libgcrypt"
-VERSION=1.5.3
+VERSION=1.6.3
 RELEASE=1
 CATEGORY="Libs"
 SUMMARY="GnuPG cryptography library"
@@ -7,31 +7,37 @@ DESCRIPTION="Libgcrypt is a general purpose crypto library based on the code
 used in GnuPG."
 HOMEPAGE="http://www.gnupg.org/related_software/libraries.html"
 #SRC_URI="ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-${VERSION}.tar.bz2"
-md5sum=99e0f2dc94dac6eceab709d03d613328
+md5sum=cbb7aa4b8c4c63f24e954fbf00e16335
 SRC_URI="
 	http://pkgs.fedoraproject.org/repo/pkgs/libgcrypt/libgcrypt-${VERSION}-hobbled.tar.xz/${md5sum}/libgcrypt-${VERSION}-hobbled.tar.xz
-	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/ecc.c?h=f20
-	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/curves.c?h=f20
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/ecc-curves.c
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/curves.c
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/t-mpi-point.c
 "
 SRC_DIR="libgcrypt-${VERSION}"
 PATCH_URI="
-	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.5.0-leak.patch?h=f20
-	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.5.2-aliasing.patch?h=f20
-	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.5.2-mpicoder-gccopt.patch?h=f20
-	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.5.3-ecc-test-fix.patch?h=f20
-	1.5.0-win64.patch
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.6.1-leak.patch
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.6.1-use-poll.patch
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.6.1-mpicoder-gccopt.patch
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.6.1-ecc-test-fix.patch
+	http://pkgs.fedoraproject.org/cgit/libgcrypt.git/plain/libgcrypt-1.6.3-aliasing.patch
+	http://pkgs.fedoraproject.org/cgit/mingw-libgcrypt.git/plain/libgcrypt-use-correct-asm-code-for-win64.patch
+	1.6.3-cygwin64.patch
 "
 
 CYGPORT_USE_UNSTABLE_API=1
 src_unpack_hook() {
-	mv ecc.c cipher/
-	mv curves.c tests/
+	mv ecc-curves.c cipher/
+	mv curves.c t-mpi-point.c tests/
 }
 
-PKG_NAMES="${NAME} ${NAME}11 ${NAME}-devel"
-libgcrypt_CONTENTS='--exclude=aclocal usr/bin/*.exe usr/share/'
-libgcrypt11_CONTENTS='usr/bin/cyggcrypt-11.dll'
+PKG_NAMES="${NAME} ${NAME}20 ${NAME}-devel"
+libgcrypt_CATEGORY="_obsolete"
+libgcrypt_REQUIRES=${NAME}-devel
+libgcrypt20_CONTENTS="usr/bin/cyggcrypt-20.dll usr/share/doc/"
 libgcrypt_devel_REQUIRES="libgpg-error-devel"
-libgcrypt_devel_CONTENTS='usr/bin/*-config usr/include/ usr/lib/ usr/share/aclocal/'
+libgcrypt_devel_CONTENTS="usr/bin/*-config usr/bin/*.exe usr/include/ usr/lib/
+	usr/share/aclocal/ usr/share/info/ usr/share/man/man1/"
 
+CYGCONF_ARGS="--disable-O-flag-munging ${ARCH_x86_64+ac_cv_sys_symbol_underscore=no}"
 MAKEOPTS+=" no_undefined=-no-undefined"
